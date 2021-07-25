@@ -19,14 +19,14 @@ bot = telebot.TeleBot(API_KEY)
 def check_allowed_chatid(message):
 	if(message.chat != None):
 		chats = db.chat
-	c_list = list(chats.find({}))
-	for chat in c_list:
-		if(message.chat.id == chat['id']):
+		c_list = list(chats.find({}))
+		if(any(message.chat.id == x['id'] for x in c_list)):
 			return True
 		else:
 			return False
 	else:
 		return False
+	
 
 # Lock user balance
 @bot.message_handler(commands=['lock_balance'], func=check_allowed_chatid)
