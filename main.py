@@ -524,19 +524,19 @@ def donate(message):
 					# Succeed message
 					sent_message = bot.reply_to(
 							message,
-							f"You succesfully donated {amount}{usrname}, wholesome!🥺❤"
+							f"You succesfully donated {amount} blessed coin(s){usrname}, wholesome!🥺❤"
 					)
 				else:				
 					sent_message = bot.reply_to(
 							message,
 							"You don't have enough balance to donate that amount, you entered a negative amount or donator/receiver has their balance locked."
 					)
-				time.sleep(10)
-				try:
-					bot.delete_message(sent_message.chat.id, sent_message.message_id)
-					bot.delete_message(message.chat.id, message.message_id)
-				except:
-					pass
+					time.sleep(10)
+					try:
+					  bot.delete_message(sent_message.chat.id, sent_message.message_id)
+					  bot.delete_message(message.chat.id, message.message_id)
+					except:
+						pass
 			else:						
 				sent_message = bot.reply_to(
 						message,
@@ -761,7 +761,8 @@ def set_bounty(message):
 						{'$set' : {'balance': user['balance'] - quantity}})
 
 					# Consult generated auto-increment id
-					auto_id = bounties.find_one({'_id': ObjectId(doc_id.inserted_id)})['id']
+					last_bty = bounties.find_one({'_id': ObjectId(doc_id.inserted_id)})
+					auto_id = last_bty['id']
 
 					bot.reply_to(
 						message,
